@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,29 +61,35 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
         }
     }
 
+
     //Interface que se comunica con la activity:
     public interface ListenerAdapterPaints{
         public void celdaPaintSeleccionada (Paint paint);
+        public void botonFavoritoSeleccionado (Paint paint);
     }
 
     //ViewHolder:
     public class PaintViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewPaintCelda;
         private ImageView imageViewPaintCelda;
+        private ImageButton botonFavoriteado;
 
         public PaintViewHolder(@NonNull View itemView){
             super(itemView);
             imageViewPaintCelda = itemView.findViewById(R.id.imageview_paint_celda);
             textViewPaintCelda = itemView.findViewById(R.id.textview_paint_celda);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            botonFavoriteado = itemView.findViewById(R.id.boton_favoritear);
+
+            imageViewPaintCelda.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Paint paint = listaDePaints.get(getAdapterPosition());
                     listener.celdaPaintSeleccionada(paint);
-
                 }
             });
+
+
+
         }
         //Juntar los componentes con la informacion:
         public void bindPaint(Paint paint){

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.dhsantiagosinatra.museumapplication.R;
 import com.dhsantiagosinatra.museumapplication.controller.PaintController;
@@ -35,6 +36,7 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_lista_paints, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_paints);
+        recyclerView.setHasFixedSize(true);
         adapterPaints = new AdapterPaints(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -70,11 +72,17 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
         }, paint.getImage());
     }
 
+
     @Override
     public void celdaPaintSeleccionada(Paint paint) {
         ListenerFragmentLista listenerFragmentLista = (ListenerFragmentLista) getContext();
         listenerFragmentLista.paintseleccionada(paint);
     }
+
+    @Override
+    public void botonFavoritoSeleccionado(Paint paint) {
+    }
+
 
     public interface ListenerFragmentLista {
         public void paintseleccionada (Paint paint);
