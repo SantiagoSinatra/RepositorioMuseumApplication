@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MuseumApplication</string>
+
+    //Facebook Login:
+    <string name="facebook_app_id">1304526983023311</string>
+    <string name="fb_login_protocol_scheme">fb1304526983023311</string>
+    //Facebook Login.
+
+    <string name="string_Fdetalle_influencer">Influenced By:</string>
+    <string name="string_Fdetalle_nationality">Nationality:</string>
+
+
+</resources>

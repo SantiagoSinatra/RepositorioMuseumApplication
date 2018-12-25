@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "416590178887",
+    "firebase_url": "https://dhmuseumapplication.firebaseio.com",
+    "project_id": "dhmuseumapplication",
+    "storage_bucket": "dhmuseumapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416590178887:android:03891c8e4c7a2d03",
+        "android_client_info": {
+          "package_name": "com.dhsantiagosinatra.museumapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416590178887-3goom26l82hk0i6mnjjimfgbus81oeni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dhsantiagosinatra.museumapplication",
+            "certificate_hash": "472337f4be0e81a6872a963d5d7852fc9814b7c9"
+          }
+        },
+        {
+          "client_id": "416590178887-14a7ojbvdsqfotvki5flhuul3ckmbgqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC46zOBediSvlVcqqjyIwKpkFuhR_cnGJ0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416590178887-14a7ojbvdsqfotvki5flhuul3ckmbgqf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
