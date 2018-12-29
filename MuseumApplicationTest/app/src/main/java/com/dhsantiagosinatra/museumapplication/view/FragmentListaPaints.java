@@ -9,10 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.dhsantiagosinatra.museumapplication.R;
 import com.dhsantiagosinatra.museumapplication.controller.PaintController;
+import com.dhsantiagosinatra.museumapplication.model.DAO.DAOFavoritosFromDatabase;
 import com.dhsantiagosinatra.museumapplication.model.DAO.DAOPaints;
 import com.dhsantiagosinatra.museumapplication.model.POJO.Paint;
 import com.dhsantiagosinatra.museumapplication.util.ResultListener;
@@ -25,6 +26,11 @@ import java.util.List;
 public class FragmentListaPaints extends Fragment implements AdapterPaints.ListenerAdapterPaints {
 
     private AdapterPaints adapterPaints;
+    private List<Paint>paintsFavoriteadas;
+
+    public List<Paint> getPaintsFavoriteadas() {
+        return paintsFavoriteadas;
+    }
 
     public FragmentListaPaints() {
         // Required empty public constructor
@@ -41,14 +47,11 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterPaints);
-
-        getPaintSet1();
-
-
+        getPaints();
         return view;
     }
 
-    public void getPaintSet1(){
+    public void getPaints(){
         PaintController paintController = new PaintController();
         paintController.getPaints(new ResultListener<List<Paint>>() {
             @Override
@@ -57,6 +60,8 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
                     getPaintFromStorage(paint);
                     adapterPaints.setPaints(result);
                 }
+                DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase();
+                daoFavoritosFromDatabase.leerFavoritos(result);
             }
         }, getActivity().getApplicationContext());
     }
@@ -67,7 +72,7 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
             @Override
             public void finish(Uri result) {
                 paint.setDownloadUrl(result.toString());
-                adapterPaints.agregarPaint(paint);
+                //adapterPaints.agregarPaint(paint);
             }
         }, paint.getImage());
     }
@@ -81,6 +86,9 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
 
     @Override
     public void botonFavoritoSeleccionado(Paint paint) {
+        DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase();
+        daoFavoritosFromDatabase.agregarAFavoritos(paint);
+
     }
 
 
