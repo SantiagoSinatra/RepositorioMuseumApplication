@@ -74,11 +74,10 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
             public void finish(List<Paint> result) {
                 for(Paint paint: result) {
                     getPaintFromStorage(paint);
-                    adapterPaints.setPaints(result);
+
 
                 }
-                MainActivity mainActivity = new MainActivity();
-                mainActivity.setListaDeTodasLasPaint(result);
+                adapterPaints.setPaints(result);
                 DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(result);
                 daoFavoritosFromDatabase.leerFavoritos();
 

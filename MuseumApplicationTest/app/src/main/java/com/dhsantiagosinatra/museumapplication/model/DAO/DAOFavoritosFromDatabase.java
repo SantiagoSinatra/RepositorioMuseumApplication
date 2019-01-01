@@ -33,6 +33,11 @@ public class DAOFavoritosFromDatabase {
     }
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    public List<Paint> getListaDeTodasLasPaint() {
+        return listaDeTodasLasPaint;
+    }
+
     DatabaseReference referenciaABaseDeDatos = database.getReference();
 
 
@@ -73,7 +78,7 @@ public class DAOFavoritosFromDatabase {
         return listaDeFavoriteadas;
     }
 
-    public List<Paint> leerFavoritos(){
+    public void leerFavoritos(){
 
         PaintController paintController = new PaintController();
 
@@ -93,12 +98,11 @@ public class DAOFavoritosFromDatabase {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Paint unaPaint = dataSnapshot.getValue(Paint.class);
                 for (Paint paintLocal:listaDeTodasLasPaint){
-                    if (paintLocal.getName().equals(unaPaint.getName())){
+                    if (unaPaint.getName().equals(paintLocal.getName())){
                         listaDeFavoriteadas.add(paintLocal);
                         break;
                     } else {
-                        paintLocal.getArtistId();
-                        break;
+
                     }
                 }
             }
@@ -123,7 +127,6 @@ public class DAOFavoritosFromDatabase {
 
             }
         });
-        return listaDeFavoriteadas;
     }
 
 

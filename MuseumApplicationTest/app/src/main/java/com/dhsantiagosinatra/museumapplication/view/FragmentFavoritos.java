@@ -15,6 +15,7 @@ import com.dhsantiagosinatra.museumapplication.model.DAO.DAOFavoritosFromDatabas
 import com.dhsantiagosinatra.museumapplication.model.POJO.Paint;
 import com.dhsantiagosinatra.museumapplication.util.ResultListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ import java.util.List;
 public class FragmentFavoritos extends Fragment implements AdapterPaints.ListenerAdapterPaints{
 
     private AdapterPaints adapterPaints;
+    private List<Paint> listaDePaintsResult =  new ArrayList<>();
+    private List<Paint> listaDeFavoriteadas = new ArrayList<>();
 
     public FragmentFavoritos() {
         // Required empty public constructor
@@ -44,11 +47,12 @@ public class FragmentFavoritos extends Fragment implements AdapterPaints.Listene
 
         recyclerViewFavoritos.setLayoutManager(linearLayoutManager);
 
+        getPaints();
+
         //getFavoritos();
 
         return view;
     }
-
 
     @Override
     public void celdaPaintSeleccionada(Paint paint) {
@@ -61,6 +65,28 @@ public class FragmentFavoritos extends Fragment implements AdapterPaints.Listene
     }
 
     public void getFavoritos(){
-        //adapterPaints.getFavoritos();
+        adapterPaints.getFavoritos();
+    }
+
+    public void getPaints() {
+        PaintController paintController = new PaintController();
+        paintController.getPaints(new ResultListener<List<Paint>>() {
+            @Override
+            public void finish(List<Paint> result) {
+                for (Paint paint : result) {
+
+
+                    listaDePaintsResult = result;
+                    //getPaintFromStorage(paint);
+                    //adapterPaints.setPaints(result);
+
+                }
+                DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(listaDePaintsResult);
+                daoFavoritosFromDatabase.leerFavoritos();
+                adapterPaints.setPaints(daoFavoritosFromDatabase.getListaDeFavoriteadas());
+                //daoFavoritosFromDatabase.leerFavoritos();
+
+            }
+        }, getActivity().getApplicationContext());
     }
 }

@@ -41,13 +41,10 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
         notifyDataSetChanged();
     }
 
-   /* public List<Paint> getFavoritos(){
-        MainActivity mainActivity = new MainActivity();
-        listaDeTodasLasPaints = mainActivity.getListaDeTodasLasPaint();
-        DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase();
-        daoFavoritosFromDatabase.leerFavoritos(listaDeTodasLasPaints);
-        return daoFavoritosFromDatabase.getListaDeFavoriteadas();
-    }*/
+    public void getFavoritos(){
+        DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(listaDePaints);
+        daoFavoritosFromDatabase.leerFavoritos();
+    }
 
 
     @NonNull
