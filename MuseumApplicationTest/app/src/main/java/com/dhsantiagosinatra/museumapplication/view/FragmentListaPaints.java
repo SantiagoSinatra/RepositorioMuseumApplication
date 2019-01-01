@@ -31,6 +31,8 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
 
     private AdapterPaints adapterPaints;
     private ListenerFragmentLista listenerFragmentLista;
+    private List<Paint> listaDeTodasLasPaint = new ArrayList<>();
+    private List<Paint> listaDeFavoriteadas = new ArrayList<>();
 
 
     public FragmentListaPaints() {
@@ -74,12 +76,12 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
             public void finish(List<Paint> result) {
                 for(Paint paint: result) {
                     getPaintFromStorage(paint);
-
-
                 }
+                listaDeTodasLasPaint = result;
                 adapterPaints.setPaints(result);
                 DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(result);
                 daoFavoritosFromDatabase.leerFavoritos();
+                listaDeFavoriteadas = daoFavoritosFromDatabase.getListaDeFavoriteadas();
 
             }
         }, getActivity().getApplicationContext());
@@ -104,8 +106,13 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
 
     @Override
     public void botonFavoritoSeleccionado(Paint paint) {
-        //DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase();
-        //daoFavoritosFromDatabase.agregarAFavoritos(paint);
+        DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(listaDeTodasLasPaint);
+        if (listaDeFavoriteadas.contains(paint)){
+            daoFavoritosFromDatabase.removerDeFavoritos(paint);
+            listaDeFavoriteadas.remove(paint);
+        } else {
+            daoFavoritosFromDatabase.agregarAFavoritos(paint);
+        }
 
     }
 

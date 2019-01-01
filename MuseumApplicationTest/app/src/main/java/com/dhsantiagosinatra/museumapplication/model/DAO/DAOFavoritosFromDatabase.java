@@ -80,8 +80,6 @@ public class DAOFavoritosFromDatabase {
 
     public void leerFavoritos(){
 
-        PaintController paintController = new PaintController();
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -101,8 +99,6 @@ public class DAOFavoritosFromDatabase {
                     if (unaPaint.getName().equals(paintLocal.getName())){
                         listaDeFavoriteadas.add(paintLocal);
                         break;
-                    } else {
-
                     }
                 }
             }
@@ -127,6 +123,16 @@ public class DAOFavoritosFromDatabase {
 
             }
         });
+    }
+
+    public void favoritearDesfavoritear(Paint unaPaintSeleccionada){
+        for (Paint paintDeListaDeFavoriteadas:listaDeFavoriteadas){
+            if (paintDeListaDeFavoriteadas.getName().equals(unaPaintSeleccionada)){
+                removerDeFavoritos(unaPaintSeleccionada);
+            }else{
+                agregarAFavoritos(unaPaintSeleccionada);
+            }
+        }
     }
 
 
