@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import com.dhsantiagosinatra.museumapplication.controller.PaintController;
 import com.dhsantiagosinatra.museumapplication.model.POJO.Paint;
+import com.dhsantiagosinatra.museumapplication.model.POJO.PaintContainer;
+import com.dhsantiagosinatra.museumapplication.util.ResultListener;
 import com.dhsantiagosinatra.museumapplication.view.AdapterPaints;
 import com.dhsantiagosinatra.museumapplication.view.FragmentListaPaints;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,13 +20,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DAOFavoritosFromDatabase {
 
-    protected List<Paint> listaDeFavoriteadas;
-    private String nombreDeLaPaintLocal;
-    private String nombreDeLaPaintEnFirebase;
+    private List<Paint> listaDeTodasLasPaint = new ArrayList<>();
+    private List<Paint> listaDeFavoriteadas = new ArrayList<>();
+
+    public DAOFavoritosFromDatabase(List<Paint> listaDeTodasLasPaint) {
+        this.listaDeTodasLasPaint = listaDeTodasLasPaint;
+    }
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference referenciaABaseDeDatos = database.getReference();
@@ -63,7 +69,13 @@ public class DAOFavoritosFromDatabase {
         ref.removeValue();
     }
 
-    public void leerFavoritos(final List<Paint> listaDeTodasLasPaint){
+    public List<Paint> getListaDeFavoriteadas() {
+        return listaDeFavoriteadas;
+    }
+
+    public List<Paint> leerFavoritos(){
+
+        PaintController paintController = new PaintController();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -75,15 +87,18 @@ public class DAOFavoritosFromDatabase {
         DatabaseReference referenceUserLoggedIn = referenceUsers.child(userID);
         DatabaseReference ref = referenceUserLoggedIn.child("favourites");
 
+
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Paint unaPaint = dataSnapshot.getValue(Paint.class);
                 for (Paint paintLocal:listaDeTodasLasPaint){
                     if (paintLocal.getName().equals(unaPaint.getName())){
+                        listaDeFavoriteadas.add(paintLocal);
                         break;
                     } else {
-                        FragmentListaPaints fragmentListaPaints = new FragmentListaPaints();
+                        paintLocal.getArtistId();
+                        break;
                     }
                 }
             }
@@ -108,7 +123,7 @@ public class DAOFavoritosFromDatabase {
 
             }
         });
-
+        return listaDeFavoriteadas;
     }
 
 

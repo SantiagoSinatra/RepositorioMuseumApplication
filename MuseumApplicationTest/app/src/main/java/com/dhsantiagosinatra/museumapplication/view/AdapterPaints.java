@@ -20,6 +20,7 @@ import java.util.List;
 public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewHolder> {
 
     private List<Paint>listaDePaints;
+    private List<Paint>listaDeTodasLasPaints = new ArrayList<>();
     private ListenerAdapterPaints listener;
     private ImageButton botonFavoriteado;
 
@@ -28,10 +29,6 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
         this.listener = listenerAdapterPaints;
     }
 
-
-    public List<Paint> getListaDePaints() {
-        return listaDePaints;
-    }
 
     public void agregarPaint (Paint paint){
         listaDePaints.add(0,paint);
@@ -44,9 +41,14 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
         notifyDataSetChanged();
     }
 
-    public ImageButton getBotonFavoriteado() {
-        return botonFavoriteado;
-    }
+   /* public List<Paint> getFavoritos(){
+        MainActivity mainActivity = new MainActivity();
+        listaDeTodasLasPaints = mainActivity.getListaDeTodasLasPaint();
+        DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase();
+        daoFavoritosFromDatabase.leerFavoritos(listaDeTodasLasPaints);
+        return daoFavoritosFromDatabase.getListaDeFavoriteadas();
+    }*/
+
 
     @NonNull
     @Override
@@ -90,6 +92,7 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
             imageViewPaintCelda = itemView.findViewById(R.id.imageview_paint_celda);
             textViewPaintCelda = itemView.findViewById(R.id.textview_paint_celda);
             botonFavoriteado = itemView.findViewById(R.id.boton_favoritear);
+
 
             imageViewPaintCelda.setOnClickListener(new View.OnClickListener() {
                 @Override

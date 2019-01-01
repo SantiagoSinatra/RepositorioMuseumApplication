@@ -9,5 +9,8 @@
     <string name="string_Fdetalle_influencer">Influenced By:</string>
     <string name="string_Fdetalle_nationality">Nationality:</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

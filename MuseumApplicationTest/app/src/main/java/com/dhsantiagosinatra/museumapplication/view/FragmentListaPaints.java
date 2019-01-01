@@ -1,8 +1,11 @@
 package com.dhsantiagosinatra.museumapplication.view;
 
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +21,7 @@ import com.dhsantiagosinatra.museumapplication.model.DAO.DAOPaints;
 import com.dhsantiagosinatra.museumapplication.model.POJO.Paint;
 import com.dhsantiagosinatra.museumapplication.util.ResultListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,11 +30,8 @@ import java.util.List;
 public class FragmentListaPaints extends Fragment implements AdapterPaints.ListenerAdapterPaints {
 
     private AdapterPaints adapterPaints;
-    private List<Paint>paintsFavoriteadas;
+    private ListenerFragmentLista listenerFragmentLista;
 
-    public List<Paint> getPaintsFavoriteadas() {
-        return paintsFavoriteadas;
-    }
 
     public FragmentListaPaints() {
         // Required empty public constructor
@@ -48,8 +49,23 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterPaints);
         getPaints();
+
+        FloatingActionButton floatingActionButton = view.findViewById(R.id.fab_fav);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listenerFragmentLista.cambiarAFragmentFavoritos();
+            }
+        });
         return view;
     }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        listenerFragmentLista = (ListenerFragmentLista) context;
+    }
+
 
     public void getPaints(){
         PaintController paintController = new PaintController();
@@ -59,9 +75,13 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
                 for(Paint paint: result) {
                     getPaintFromStorage(paint);
                     adapterPaints.setPaints(result);
+
                 }
-                DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase();
-                daoFavoritosFromDatabase.leerFavoritos(result);
+                MainActivity mainActivity = new MainActivity();
+                mainActivity.setListaDeTodasLasPaint(result);
+                DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(result);
+                daoFavoritosFromDatabase.leerFavoritos();
+
             }
         }, getActivity().getApplicationContext());
     }
@@ -80,19 +100,18 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
 
     @Override
     public void celdaPaintSeleccionada(Paint paint) {
-        ListenerFragmentLista listenerFragmentLista = (ListenerFragmentLista) getContext();
         listenerFragmentLista.paintseleccionada(paint);
     }
 
     @Override
     public void botonFavoritoSeleccionado(Paint paint) {
-        DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase();
-        daoFavoritosFromDatabase.agregarAFavoritos(paint);
+        //DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase();
+        //daoFavoritosFromDatabase.agregarAFavoritos(paint);
 
     }
 
-
     public interface ListenerFragmentLista {
         public void paintseleccionada (Paint paint);
+        public void cambiarAFragmentFavoritos();
     }
 }

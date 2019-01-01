@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.dhsantiagosinatra.museumapplication.model.DAO.DAOArtists;
+import com.dhsantiagosinatra.museumapplication.model.DAO.DAOFavoritosFromDatabase;
 import com.dhsantiagosinatra.museumapplication.model.DAO.DAOPaints;
 import com.dhsantiagosinatra.museumapplication.model.DAO.MyDatabase;
 import com.dhsantiagosinatra.museumapplication.model.POJO.Artist;
@@ -12,9 +13,13 @@ import com.dhsantiagosinatra.museumapplication.model.POJO.Paint;
 import com.dhsantiagosinatra.museumapplication.model.POJO.PaintContainer;
 import com.dhsantiagosinatra.museumapplication.util.ResultListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PaintController {
+
+    private List<Paint> listaDeTodasLasPaints = new ArrayList<>();
+
 
     public void getPaints(final ResultListener<List<Paint>> listenerDeLaView, final Context context) {
         if (isConnected(context)) {
@@ -32,6 +37,15 @@ public class PaintController {
             listenerDeLaView.finish(MyDatabase.getDatabase(context).paintDatabaseDAO().getAllPaints());
         }
     }
+
+    public void getPaintsFromLocal(){
+
+    }
+
+    /*public void getFavoritos(final ResultListener<List<Paint>> listenerDeLosFavoritos, final Context context){
+        DAOFavoritosFromDatabase daoFavoritosFromDatabase =  new DAOFavoritosFromDatabase();
+        daoFavoritosFromDatabase.getListaDeFavoriteadas();
+    }*/
 
     public void getArtista(final ResultListener<Artist> listener, String idArtist){
 
