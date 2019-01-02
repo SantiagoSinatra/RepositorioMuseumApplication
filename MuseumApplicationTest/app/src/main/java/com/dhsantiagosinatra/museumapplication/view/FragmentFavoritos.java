@@ -73,14 +73,7 @@ public class FragmentFavoritos extends Fragment implements AdapterPaints.Listene
         paintController.getPaints(new ResultListener<List<Paint>>() {
             @Override
             public void finish(List<Paint> result) {
-                for (Paint paint : result) {
-
-
-                    listaDePaintsResult = result;
-                    //getPaintFromStorage(paint);
-                    //adapterPaints.setPaints(result);
-
-                }
+                listaDePaintsResult = result;
                 DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(listaDePaintsResult);
                 daoFavoritosFromDatabase.leerFavoritos();
                 adapterPaints.setPaints(daoFavoritosFromDatabase.getListaDeFavoriteadas());

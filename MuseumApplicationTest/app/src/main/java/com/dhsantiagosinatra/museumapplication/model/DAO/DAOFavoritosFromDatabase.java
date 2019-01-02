@@ -96,7 +96,7 @@ public class DAOFavoritosFromDatabase {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Paint unaPaint = dataSnapshot.getValue(Paint.class);
                 for (Paint paintLocal:listaDeTodasLasPaint){
-                    if (unaPaint.getName().equals(paintLocal.getName())){
+                    if (unaPaint.getName().equals(paintLocal.getName()) && unaPaint.getArtistId().equals(paintLocal.getArtistId())){
                         listaDeFavoriteadas.add(paintLocal);
                         break;
                     }
@@ -124,91 +124,4 @@ public class DAOFavoritosFromDatabase {
             }
         });
     }
-
-    public void favoritearDesfavoritear(Paint unaPaintSeleccionada){
-        for (Paint paintDeListaDeFavoriteadas:listaDeFavoriteadas){
-            if (paintDeListaDeFavoriteadas.getName().equals(unaPaintSeleccionada)){
-                removerDeFavoritos(unaPaintSeleccionada);
-            }else{
-                agregarAFavoritos(unaPaintSeleccionada);
-            }
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public void chequearSiEstaFavoriteada(List<Paint> listaDeTodasLasPaint){
-//
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//
-//        String userID = user.getUid();
-//
-//        DatabaseReference referenceDatabase = database.getReference();
-//        DatabaseReference referenceUsers = referenceDatabase.child("users");
-//        DatabaseReference referenceUserLoggedIn = referenceUsers.child(userID);
-//        DatabaseReference referenceFavs = referenceUserLoggedIn.child("favourites");
-//        DatabaseReference ref = referenceFavs.child(paint.getName());
-//
-//        for (Paint paintLocal : listaDeTodasLasPaint){
-//
-//
-//            ref.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    Paint paintLocal = dataSnapshot.getValue(Paint.class);
-//                    paintLocal.getName();
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-//
-//
-//
-//            if (ref.equals(paintLocal.getName())){
-//                FragmentListaPaints fragmentListaPaints = new FragmentListaPaints();
-//                fragmentListaPaints.getPaintsFavoriteadas().add(paintLocal);
-//                //Toast.makeText(fragmentListaPaints.getContext(), "Lo encontre gato", Toast.LENGTH_SHORT).show();
-//            } else {
-//                FragmentListaPaints fragmentListaPaints = new FragmentListaPaints();
-//                //Toast.makeText(fragmentListaPaints.getContext(), "No se pudo perro", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//
-//    }
-//
-//    public void chequearSiEstaFavoriteada(){
-//
-//    }
-
-
-
 }

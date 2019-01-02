@@ -110,11 +110,13 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
         if (listaDeFavoriteadas.contains(paint)){
             daoFavoritosFromDatabase.removerDeFavoritos(paint);
             listaDeFavoriteadas.remove(paint);
+            //adapterPaints.cambiarIcono(true);
         } else {
             daoFavoritosFromDatabase.agregarAFavoritos(paint);
+            //adapterPaints.cambiarIcono(false);
         }
-
     }
+
 
     public interface ListenerFragmentLista {
         public void paintseleccionada (Paint paint);

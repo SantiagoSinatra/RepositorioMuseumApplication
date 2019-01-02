@@ -22,11 +22,12 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
     private List<Paint>listaDePaints;
     private List<Paint>listaDeTodasLasPaints = new ArrayList<>();
     private ListenerAdapterPaints listener;
-    private ImageButton botonFavoriteado;
+
 
     public AdapterPaints(ListenerAdapterPaints listenerAdapterPaints) {
         this.listaDePaints = new ArrayList<>();
         this.listener = listenerAdapterPaints;
+        setHasStableIds(true);
     }
 
 
@@ -71,6 +72,16 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
         }
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
 
     //Interface que se comunica con la activity:
     public interface ListenerAdapterPaints{
@@ -78,10 +89,12 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
         public void botonFavoritoSeleccionado (Paint paint);
     }
 
+
     //ViewHolder:
     public class PaintViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewPaintCelda;
         private ImageView imageViewPaintCelda;
+        private ImageButton botonFavoriteado;
 
 
         public PaintViewHolder(@NonNull View itemView){
@@ -104,10 +117,15 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
                 public void onClick(View v) {
                     Paint paint = listaDePaints.get(getAdapterPosition());
                     listener.botonFavoritoSeleccionado(paint);
+                    botonFavoriteado.setImageResource(R.drawable.favoriteado_icon);
                 }
             });
 
+
+
         }
+
+
 
 
         //Juntar los componentes con la informacion:
