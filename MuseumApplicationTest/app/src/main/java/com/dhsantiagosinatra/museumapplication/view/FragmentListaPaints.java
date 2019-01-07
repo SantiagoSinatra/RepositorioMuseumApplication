@@ -44,12 +44,19 @@ public class FragmentListaPaints extends Fragment implements AdapterPaints.Liste
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_lista_paints, container, false);
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_paints);
+
         recyclerView.setHasFixedSize(true);
+
         adapterPaints = new AdapterPaints(this);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
         recyclerView.setLayoutManager(linearLayoutManager);
+
         recyclerView.setAdapter(adapterPaints);
+
         getPaints();
 
         FloatingActionButton floatingActionButton = view.findViewById(R.id.fab_fav);

@@ -20,7 +20,6 @@ import java.util.List;
 public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewHolder> {
 
     private List<Paint>listaDePaints;
-    private List<Paint>listaDeTodasLasPaints = new ArrayList<>();
     private ListenerAdapterPaints listener;
 
 
@@ -31,20 +30,9 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
     }
 
 
-    public void agregarPaint (Paint paint){
-        listaDePaints.add(0,paint);
-        notifyDataSetChanged();
-
-    }
-
     public void setPaints(List<Paint> paints){
         this.listaDePaints = paints;
         notifyDataSetChanged();
-    }
-
-    public void getFavoritos(){
-        DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(listaDePaints);
-        daoFavoritosFromDatabase.leerFavoritos();
     }
 
 
@@ -104,6 +92,8 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
             botonFavoriteado = itemView.findViewById(R.id.boton_favoritear);
 
 
+            botonFavoriteado.setImageResource(R.drawable.favoriteado_icon);
+
             imageViewPaintCelda.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,9 +114,6 @@ public class AdapterPaints extends RecyclerView.Adapter<AdapterPaints.PaintViewH
 
 
         }
-
-
-
 
         //Juntar los componentes con la informacion:
         public void bindPaint(Paint paint){

@@ -38,15 +38,6 @@ public class PaintController {
         }
     }
 
-    public void getPaintsFromLocal(){
-
-    }
-
-    /*public void getFavoritos(final ResultListener<List<Paint>> listenerDeLosFavoritos, final Context context){
-        DAOFavoritosFromDatabase daoFavoritosFromDatabase =  new DAOFavoritosFromDatabase();
-        daoFavoritosFromDatabase.getListaDeFavoriteadas();
-    }*/
-
     public void getArtista(final ResultListener<Artist> listener, String idArtist){
 
         DAOArtists daoArtists = new DAOArtists();
@@ -62,6 +53,11 @@ public class PaintController {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    public List BuscarFavoriteadasPorElUsuario(List<Paint> listaDeTodasLasPaints){
+        DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(listaDeTodasLasPaints);
+        return daoFavoritosFromDatabase.leerFavoritos();
     }
 
 }

@@ -39,17 +39,17 @@ public class FragmentFavoritos extends Fragment implements AdapterPaints.Listene
 
         RecyclerView recyclerViewFavoritos = view.findViewById(R.id.recyclerview_favoritos);
 
+        recyclerViewFavoritos.setHasFixedSize(true);
+
         adapterPaints = new AdapterPaints(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
-        recyclerViewFavoritos.setAdapter(adapterPaints);
-
         recyclerViewFavoritos.setLayoutManager(linearLayoutManager);
 
-        getPaints();
+        recyclerViewFavoritos.setAdapter(adapterPaints);
 
-        //getFavoritos();
+        getPaints();
 
         return view;
     }
@@ -61,11 +61,12 @@ public class FragmentFavoritos extends Fragment implements AdapterPaints.Listene
 
     @Override
     public void botonFavoritoSeleccionado(Paint paint) {
-
-    }
-
-    public void getFavoritos(){
-        adapterPaints.getFavoritos();
+        DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(listaDePaintsResult);
+        if (listaDeFavoriteadas.contains(paint)){
+            daoFavoritosFromDatabase.removerDeFavoritos(paint);
+            listaDeFavoriteadas.remove(paint);
+            adapterPaints.notifyDataSetChanged();
+        }
     }
 
     public void getPaints() {
@@ -75,10 +76,14 @@ public class FragmentFavoritos extends Fragment implements AdapterPaints.Listene
             public void finish(List<Paint> result) {
                 listaDePaintsResult = result;
                 DAOFavoritosFromDatabase daoFavoritosFromDatabase = new DAOFavoritosFromDatabase(listaDePaintsResult);
-                daoFavoritosFromDatabase.leerFavoritos();
-                adapterPaints.setPaints(daoFavoritosFromDatabase.getListaDeFavoriteadas());
+                daoFavoritosFromDatabase.getListaDeFavoriteadas();
+                if (listaDeFavoriteadas.size() == 0){
+                    listaDeFavoriteadas = daoFavoritosFromDatabase.getListaDeFavoriteadas();
+                } else {
+                    adapterPaints.setPaints(listaDeFavoriteadas);
+                }
+                adapterPaints.setPaints(listaDeFavoriteadas);
                 //daoFavoritosFromDatabase.leerFavoritos();
-
             }
         }, getActivity().getApplicationContext());
     }
