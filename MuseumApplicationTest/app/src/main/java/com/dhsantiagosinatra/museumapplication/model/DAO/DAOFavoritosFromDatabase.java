@@ -21,15 +21,7 @@ public class DAOFavoritosFromDatabase {
     public DAOFavoritosFromDatabase(List<Paint> listaDeTodasLasPaint) {
         this.listaDeTodasLasPaint = listaDeTodasLasPaint;
     }
-
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-    public List<Paint> getListaDeTodasLasPaint() {
-        return listaDeTodasLasPaint;
-    }
-
-    DatabaseReference referenciaABaseDeDatos = database.getReference();
-
+     
 
     public void agregarAFavoritos(Paint paint) {
 
